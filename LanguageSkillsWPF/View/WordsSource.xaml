@@ -1,0 +1,107 @@
+﻿<UserControl
+    x:Class="LanguageSkillsWPF.View.WordsSource"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dragD="urn:gong-wpf-dragdrop"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:local="clr-namespace:LanguageSkillsWPF.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:LanguageSkillsWPF.Model"
+    xmlns:vm="clr-namespace:LanguageSkillsWPF.ViewModel"
+    mc:Ignorable="d"
+    d:DesignHeight="600"
+    d:DesignWidth="622">
+
+    <UserControl.DataContext>
+        <vm:WordsSourceVM />
+    </UserControl.DataContext>
+
+    <Grid>
+
+        <Border Background="AliceBlue" CornerRadius="0,20,20,0">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <StackPanel
+                    x:Name="InputFile"
+                    Margin="0,0,20,0"
+                    AllowDrop="True"
+                    Background="AliceBlue"
+                    dragD:DragDrop.DropHandler="{Binding}"
+                    dragD:DragDrop.IsDropTarget="True">
+                    <!--AllowDrop="True" Drop="InputFile_Drop" dragD:DragDrop.DropHandler="{Binding }"-->
+                    <TextBlock
+                        Margin="0,20,0,0"
+                        HorizontalAlignment="Center"
+                        FontSize="40"
+                        Style="{StaticResource Text_Style}"
+                        Text="Перетащите файл" />
+                    <!-- <Label x:Name="FileNames"/> -->
+                </StackPanel>
+
+                <fa:ImageAwesome
+                    x:Name="LoadingAnimation"
+                    Grid.Row="1"
+                    Width="50"
+                    Icon="Spinner"
+                    Spin="True"
+                    SpinDuration="2"
+                    Visibility="{Binding LoadingAnimation, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock
+                    x:Name="FileNames"
+                    Grid.Row="0"
+                    Margin="20,0,0,0"
+                    VerticalAlignment="Bottom"
+                    FontSize="14"
+                    Style="{StaticResource Text_Style}"
+                    Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" />
+
+                <ScrollViewer
+                    Grid.Row="1"
+                    Width="622"
+                    Height="500"
+                    Background="Transparent"
+                    VerticalScrollBarVisibility="Auto">
+
+                    <ListView
+                        Width="622"
+                        Height="450"
+                        VerticalAlignment="Top"
+                        Background="Transparent"
+                        ItemsSource="{Binding CheckboxesInformation}"
+                        ScrollViewer.CanContentScroll="True"
+                        Visibility="{Binding ListBoxVisibility, UpdateSourceTrigger=PropertyChanged}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox
+                                    HorizontalAlignment="Right"
+                                    HorizontalContentAlignment="Left"
+                                    FlowDirection="LeftToRight"
+                                    IsChecked="{Binding IsChecked}">
+                                    <CheckBox.Content>
+                                        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                                            <TextBlock Width="150" Text="{Binding SearchEntry.Word}" />
+                                            <TextBlock Width="50" Text="{Binding SearchEntry.Count}" />
+                                            <TextBlock Text="частота" />
+                                        </StackPanel>
+                                    </CheckBox.Content>
+                                </CheckBox>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
+                <Button Grid.Row="1" Command="{Binding SendRequest}" Visibility="{Binding ListBoxVisibility}" Width="100" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,25,5">Создать карточки</Button>
+
+            </Grid>
+
+        </Border>
+
+    </Grid>
+</UserControl>

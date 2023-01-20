@@ -1,0 +1,118 @@
+﻿<Window
+    x:Class="LanguageSkillsWPF.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:LanguageSkillsWPF"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Menu="clr-namespace:LanguageSkillsWPF.Utilities"
+    xmlns:vm ="clr-namespace:LanguageSkillsWPF.ViewModel"
+    Width="850"
+    Height="600"
+    mc:Ignorable="d"
+    AllowsTransparency="True"
+    Background="Transparent"
+    Title="MainWindow"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None">
+    <!-- true none transparent-->
+    <Window.DataContext>
+        <vm:NavigationVM />
+    </Window.DataContext>
+    <Grid>
+        <Border Background="#FF57AFAD" CornerRadius="20" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="228" />
+                <ColumnDefinition Width="622" />
+
+            </Grid.ColumnDefinitions>
+
+            <Grid
+                Width="228"
+                HorizontalAlignment="Left"
+                MouseDown="Grid_MouseDown">
+
+                <Border Background="#FFD2D4F1" CornerRadius="20,0,0,20" />
+
+                <StackPanel Width="228" Height="400">
+
+                    <Menu:Btn
+                        Command="{Binding StatsCommand}"
+                        IsChecked="True"
+                        Style="{StaticResource BtnStyle}">
+                        <Grid>
+
+                            <Image Source="Images/stats.png" Style="{StaticResource Image_Style}" />
+                            <TextBlock Style="{StaticResource Text_Style}" Text="Статистика" />
+
+                        </Grid>
+
+                    </Menu:Btn>
+
+                    <Menu:Btn
+                        Command="{Binding WordsSourceCommand}"
+                        IsChecked="False"
+                        Style="{StaticResource BtnStyle}">
+                        <Grid>
+                            <!--Icon here-->
+                            <Image Source="Images/upload.png" Style="{StaticResource Image_Style}" />
+
+                            <TextBlock Style="{StaticResource Text_Style}" Text="Загрузить слова" />
+                        </Grid>
+
+
+                    </Menu:Btn>
+
+                    <Menu:Btn
+                        Command="{Binding LearnCommand}"
+                        IsChecked="False"
+                        Style="{StaticResource BtnStyle}">
+
+                        <Grid>
+                            <Image Source="Images/learn.png" Style="{StaticResource Image_Style}" />
+
+                            <TextBlock Style="{StaticResource Text_Style}" Text="Учить слова" />
+                        </Grid>
+
+                    </Menu:Btn>
+
+                    <Menu:Btn
+                        Click="CloseApp_Click"
+                        IsChecked="False"
+                        Style="{StaticResource BtnStyle}">
+
+                        <Grid>
+                            <Image Source="images/exit.png" Style="{StaticResource Image_Style}" />
+
+                            <TextBlock Style="{StaticResource Text_Style}" Text="Выход" />
+                        </Grid>
+
+                    </Menu:Btn>
+
+
+                </StackPanel>
+
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <ContentControl x:Name="Pages" Content="{Binding CurrentView}" />
+            </Grid>
+
+            <Path
+                Width="25"
+                Height="25"
+                Margin="10,10,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Data="M9,7H11V15H15V17H9V7M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M5,5V19H19V5H5Z"
+                Fill="BlueViolet"
+                Stretch="Uniform" />
+        </Grid>
+
+
+
+    </Grid>
+
+</Window>
